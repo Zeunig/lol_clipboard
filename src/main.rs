@@ -30,7 +30,7 @@ unsafe fn get_process_name() -> String {
 }
 
 fn main() {
-    let titlebar = CString::new("LoL clipboard || https://zeunig.hu || https://github.com/Zeunig/LoL-clipboard").unwrap();
+    let titlebar = CString::new("LoL clipboard || https://zeunig.hu || https://github.com/Zeunig/LoL_clipboard").unwrap();
     let titlebar = titlebar.as_ptr() as LPCSTR;
     unsafe { SetConsoleTitleA(titlebar) };
     println!(r#"----------------------------------------------------------
@@ -39,7 +39,6 @@ fn main() {
                   GITHUB.COM/ZEUNIG
                       ZEUNIG.HU
            CTRL+V TO PASTE (UP TO 250 CHARACTER)
-    CTRL+SHIFT+V TO PASTE TO ALL CHAT (NO CHARACTER LIMIT)
               CTRL+ALT TO EXIT APPLICATION
 ----------------------------------------------------------"#);
     mki::register_hotkey(&[Keyboard::LeftControl, Keyboard::V],
