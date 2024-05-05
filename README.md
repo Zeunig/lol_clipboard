@@ -1,3 +1,5 @@
+update: vanguard is live on league, DO NOT use this software, don't risk it a ban :>
+
 # LoL Clipboard
 An application that allows you to paste text into the in-game chat
 
