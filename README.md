@@ -1,29 +1,30 @@
-update: vanguard is live on league, DO NOT use this software, don't risk a ban :>
+[Showcase video](https://www.youtube.com/watch?v=jWmc2npUEX4)
 
 # LoL Clipboard
-An application that allows you to paste text into the in-game chat
+An application that allows you to paste text into the in-game chat using Ctrl+V, bypassing clipboard restrictions
 
 ## ⚠ WARNING ⚠
-I am not responsible for any kind of bans that occurs on your account while you're using my software, be careful when using this software.
+Although there are no known bans by Vanguard for using this software, I'd suggest everyone to be careful while using this software. I am not responsible for your account getting banned.
 
 ## Usage
 Press Ctrl+V while in-game to paste text into the chat
 
 ## Additional info
-Supported operating system: Windows
-The app might get buggy if there is nothing on the clipboard
+- Supported operating system: Windows
+- The app might get buggy if there is nothing on the clipboard
+- The app might crash if you spam Ctrl+V
 
-## How to download it?
+## How to use it?
 1. Download the .exe file from releases
 2. Start the program
-3. ???
-4. Profit
+3. Copy text with Ctrl+C
+4. Paste text with Ctrl+V
 
-## How do I compile it?
-1. Install Rust
+## How can I compile it?
+1. Install [Rust](https://www.rust-lang.org/)
 2. Download the source code
-3. Type "cargo build --release" into the cmd
-4. Done! You can find the .exe file inside the /target/release folder!
+3. Type "cargo build" into the cmd
+4. Done! You can find the .exe file inside the /target/debug folder!
 
 ## Contact
 [Discord server](https://discord.gg/pJVxS6uRTK)<br />
