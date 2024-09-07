@@ -1,5 +1,5 @@
 
-use std::{process::exit, time::Duration, ffi::CString};
+use std::{ffi::CString, fs::OpenOptions, io::{Read, Write}, process::exit, str::FromStr, time::Duration};
 use mki::Keyboard;
 use winapi::{um::{wincon::{GetConsoleWindow, SetConsoleTitleA}, winuser::{OpenClipboard, CloseClipboard, GetForegroundWindow, GetWindowTextA, CF_UNICODETEXT}, winbase::GlobalSize, winnt::LPCSTR,}, ctypes::c_void, shared::windef::HWND__};
 pub mod input;
@@ -30,6 +30,41 @@ unsafe fn get_process_name() -> String {
 }
 
 fn main() {
+    let mut paste_keybind: Vec<Keyboard> = Vec::new();
+    if let Ok(mut config) = OpenOptions::new().create(true).read(true).write(true).open("./config.ini") {
+        let mut content = String::new();
+        if let Ok(_) = config.read_to_string(&mut content) {
+            if content.len() == 0 {
+                // Empty .ini file, we fill it up with the default settings
+                let _ = config.write_all(b"[binds]
+paste = LeftControl V");
+            }else {
+                // Find the "paste = ..." line
+                let mut pasteline = "";
+                for line in content.split("\n") {
+                    if line.contains("paste =") {
+                        pasteline = line;
+                        break;
+                    }
+                }
+                if pasteline != "" {
+                    // Remove "paste ="
+                    pasteline = &pasteline[6..];
+                    for x in pasteline.split(" ") {
+                        if x != "" {
+                            if let Ok(keybind) = Keyboard::from_str(x) {
+                                paste_keybind.push(keybind);
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+    if paste_keybind.is_empty() {
+        paste_keybind.extend_from_slice(&[Keyboard::LeftControl, Keyboard::V]);
+    }
     let titlebar = CString::new("LoL clipboard || https://zeunig.hu || https://github.com/Zeunig/LoL_clipboard").unwrap();
     let titlebar = titlebar.as_ptr() as LPCSTR;
     unsafe { SetConsoleTitleA(titlebar) };
@@ -41,7 +76,7 @@ fn main() {
            CTRL+V TO PASTE (UP TO 250 CHARACTER)
               CTRL+ALT TO EXIT APPLICATION
 ----------------------------------------------------------"#);
-    mki::register_hotkey(&[Keyboard::LeftControl, Keyboard::V],
+    mki::register_hotkey(&paste_keybind,
     move || unsafe {
         if get_process_name().contains("League of Legends (TM) Client") {
             let hwnd = GetConsoleWindow();
